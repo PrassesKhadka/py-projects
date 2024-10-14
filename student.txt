@@ -1,0 +1,4 @@
+{'id': 9762938, 'name': 'Prasses Khadka', 'grade': {'english': 90, 'maths': 99, 'science': 87}, 'age': '22'}
+{'id': 84956, 'name': 'Ram', 'grade': {'english': 43, 'maths': 67, 'science': 45}, 'age': '45'}
+{'id': 6740378, 'name': 'Hari', 'grade': {'english': 22, 'maths': 90, 'science': 34}, 'age': '34'}
+{'id': 5003251, 'name': 'HOMar', 'grade': {'english': 3, 'maths': 1, 'science': 2}, 'age': '22'}
