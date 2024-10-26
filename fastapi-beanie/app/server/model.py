@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import Optional
 from beanie import Document
 from pydantic import BaseModel
@@ -20,6 +20,11 @@ class TestDrivenArticle(Document):
     class Settings:
         name="testdriven_collection"
 
+
+"""
+Settings -> collection to associate the schema/document with 
+Config -> schema example in swagger-docs 
+"""
 class ProductReview(Document):
     name:str
     product:str
@@ -34,27 +39,29 @@ class ProductReview(Document):
         schema_extra={
             "example":{
                 "name":"Prasses",
-                "product":"Football",
+                "product":"Smartphone",
                 "rating":4.9,
-                "review":"Thikthak",
+                "review":"Good!!!",
                 "date":datetime.now()
             }
         }
-    
+
+# The Pydantic model that represents the data
+# To be sent in body #BaseModel
 class UpdateProductReview(BaseModel):
     name:Optional[str]
     product:Optional[str]
     rating:Optional[float]
     review:Optional[str]
-    date:Optional[datetime] 
+    date:Optional[str]=datetime.now()
 
     class Config:
         schema_extra={
             "example":{
                 "name":"Prasses",
-                "product":"Cricket",
+                "product":"Book",
                 "rating":5.0,
-                "review":"Gazab",
+                "review":"Great!!!",
                 "date":datetime.now()
             }
         }
