@@ -1,8 +1,13 @@
 version: "3.1"
 
 services:
-  mongo:
-    image: mongo
+  mongodb:
+    image: mongo:latest
+    container_name: mongoDB
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-data:/data/db
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -10,6 +15,7 @@ services:
 
   mongo-express:
     image: mongo-express
+    container_name: mongoExpress
     restart: always
     ports:
       - 8081:8081
@@ -18,3 +24,6 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
       ME_CONFIG_BASICAUTH: "false"
+
+volumes:
+  mongo-data:
