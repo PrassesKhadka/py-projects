@@ -8,6 +8,8 @@ async def init_db():
     client=motor.motor_asyncio.AsyncIOMotorClient(
         # connection-url:
         # protocol://user_name:password@host:port/Database(optional)
+        # /database specifies the default database that the client will use after connecting to MongoDB.
+        # This part is optional, but it's helpful when you want to immediately start interacting with a specific database.
         "mongodb://root:example@localhost:27017"
     )
     # database=client.get_database("beanie_example")

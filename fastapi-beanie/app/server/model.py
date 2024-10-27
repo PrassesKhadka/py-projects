@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Optional
+from enum import Enum 
 from beanie import Document
 from pydantic import BaseModel
 
@@ -22,6 +23,12 @@ class TestDrivenArticle(Document):
 
 
 """
+Defining an enum
+"""
+class Statuses(str, Enum):
+    DELETED = "DELETED"
+
+"""
 Settings -> collection to associate the schema/document with 
 Config -> schema example in swagger-docs 
 """
@@ -32,6 +39,7 @@ class ProductReview(Document):
     review:str
     data:datetime=datetime.now()
 
+    # to associate a collection
     class Settings:
         name="product_review"
 

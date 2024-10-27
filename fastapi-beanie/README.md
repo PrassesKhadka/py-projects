@@ -1,4 +1,4 @@
-# FastAPI + MongoDB + Beanie
+# FastAPI + MongoDB + Beanie + Docker
 
 - Lifespan Events in FastAPI
 
@@ -187,3 +187,10 @@ db.currentOp()
 Kill an Operation:
 db.killOp(<op_id>)
 ```
+
+## Docker
+
+- `docker-compose down` -> removes all containers,networks, and volumes
+- `docker-compose stop` -> stops running containers without removing them.
+- `docker-compose up --build`-> builds images before starting containers, regardless of whether the images already exist, usseful when you have updated code or dependencies in the Dockerfile(latest changes included)
+- `docker-compose logs service_name -f / --tail=100`

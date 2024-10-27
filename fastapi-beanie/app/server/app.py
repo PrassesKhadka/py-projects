@@ -26,6 +26,7 @@ app=FastAPI(lifespan=any_name_lifespan)
 # we can make api routes using just @app as well but
 # routes/controllers for modularisation
 # prefix -> route initial path
+# tags -> group routes in the OpenAPI(Swagger)docs under a specific label
 app.include_router(ProductReviewRouter,tags=["Product Reviews"],prefix="/reviews")
 
 @app.get("/",tags=["Root"])

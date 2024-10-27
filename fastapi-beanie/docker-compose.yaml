@@ -1,29 +1,78 @@
 version: "3.1"
 
+volumes:
+  mongo-data:
+
+# custom-networks that your services can use to communicate with each other
+networks:
+  dev:
+    driver: bridge
+  # external: true -> tells that this network is managed outside of the compose-file
+  # it should already exist in Docker before running the docker-compose
+  frontend:
+    external: true
+
 services:
+  server:
+    image: fastapi/server
+    build: .
+    container_name: fastapi-server
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/code
+    depends_on:
+      - mongodb
+    # develop:
+    #   watch:
+    #     - action: sync
+    #       path: .
+    #       target: /code
+    restart: always
+    networks:
+      - dev
+
   mongodb:
     image: mongo:latest
     container_name: mongoDB
+    env_file:
+      - .env
     ports:
       - 27017:27017
     volumes:
       - mongo-data:/data/db
     restart: always
     environment:
+      MONGO_INITDB_DATABASE: db_name
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    # This health check ensures MongoDB is fully operational
+    # so that mongo-express dependent service attempt to connect to it.
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - dev
+    command: mongod --quiet --logpath /dev/null
 
-  mongo-express:
-    image: mongo-express
-    container_name: mongoExpress
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
-      ME_CONFIG_BASICAUTH: "false"
-
-volumes:
-  mongo-data:
+  # mongo-express:
+  #   image: mongo-express:latest
+  #   container_name: mongoExpress
+  #   restart: always
+  #   ports:
+  #     - 8081:8081
+  #   depends_on:
+  #     mongodb:
+  #       condition: service_healthy
+  #   networks:
+  #     - dev
+  #   environment:
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: example
+  #     # @mongodb ->  mongodb database service name
+  #     ME_CONFIG_MONGODB_URL: mongodb://root:example@mongodb:27017/
+  #     ME_CONFIG_BASICAUTH: "false"

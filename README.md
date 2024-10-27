@@ -59,6 +59,85 @@ asyncio.run(main())
 
 ```
 
+- Decorators in Python(Wrapper over a function -> Special type of callback function -> Like Higher-Order-Function in JS): tool for modifying or extending the behavior of functions or classes. "WRAPPING" functionality around an existing function or class. Enforces DRY !!!
+  Eg: @property(getter,setter for `_radius`-> protected variable)
+
+```
+def my_decorator(func):
+  def wrapper(*args,**kwargs):
+    # Code to execute before the function
+    result=func(*args,**kwargs)
+    # Code to execute after the function
+    return result
+
+  return wrapper
+
+@my_decorator
+def greet():
+  print("Hello, World!")
+```
+
+```
+*args -> Variable-Length Positional Arguments like spread operator in js {...args} -> gives the function arguments as array. Similarly *args in tuple
+
+**kwargs -> Variable-Length Keyword Arguments -> Similar to *args but gives out dictionary -> Eg: (name="Alice")->{name:"Alice}
+```
+
+- Public,Private,Protected variable in Python
+
+```
+_variable -> protected (for internal use only, should not be accessed directly by external code)
+__variable -> private
+variable -> public
+
+Eg:
+class Circle:
+    def __init__(self, radius):
+        self._radius = radius
+
+    @property
+    def radius(self):
+        return self._radius
+
+    @radius.setter
+    def radius(self, value):
+        if value < 0:
+            raise ValueError("Radius cannot be negative")
+        self._radius = value
+
+    @property
+    def area(self):
+        return 3.14159 * (self._radius ** 2)
+
+c=Circle(5)
+print(c.radius)
+print(c.area)
+
+c.radius=10
+print(c.area)
+```
+
+- Inheritance in Python
+
+```
+class Parent:
+  # Parent class definition
+  pass -> Placeholder, no attributes or methods defined yet # Do nothing Function
+
+class Child(Parent):
+  # Child class definition
+  pass
+
+super() -> to call parent class function
+```
+
+- assert in Python: Debugging so `python -O your_script.py` to disable them in Production
+
+```
+assert x===5, "X should be equal to 5"
+print("Assertion passed")
+```
+
 - Slice Notations in Python:
 
 ```
@@ -234,3 +313,75 @@ shutil.remove('file_to_delete.txt')
 <!-- delete a non-empty dir -->
 .rmtree
 ```
+
+### More Important concepts in Python
+
+1. Generators and Iterators
+
+- generators: type of iterable -> uses the yield keyword
+
+Also, All generator functions are iterators because they produce values one at a time and maintain their state.
+
+Using generators can be more memory-efficient than using lists, as they yield items one by one instead of storing the entire sequence in memory at once. This is particularly useful for large datasets or streams of data​
+
+```
+def generator_example(n):
+  while(n>5):
+    yield n
+    n=n-1
+
+generate=generator(10)
+
+for number in generate:
+  print(number)
+
+Output: 10,9,8,7,6
+```
+
+- iterators: `__iter__()` and `__next__()`
+  Also,All generator functions are iterators because they produce values one at a time and maintain their state.
+
+```
+class Countdown:
+  def __init__(self,start):
+    self.current=start
+
+  def __iter__(self):
+    return self
+
+  def __next__(self):
+    if self.current<=0:
+      raise StopIteration
+    else:
+      result=self.current
+      self.current-=1
+      return result
+
+for number in Countdown(5):
+  print(number)
+```
+
+2. Context Managers
+
+- `with` statement
+
+Custom Context Manager
+
+```
+from contextlib import contextmanager
+
+@contextmanager
+def managed_file(filename):
+  try:
+    f=open(filename,'w)
+    yield f
+  finally:
+    f.close()
+
+with managed_file('file.txt') as f:
+  f.write('Hello, World!')
+```
+
+3. List Comprehensions vs For Loops
+
+squares=[x**2 for x in range(10)] -> More readable than for-loop
