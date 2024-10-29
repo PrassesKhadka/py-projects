@@ -63,6 +63,32 @@ asyncio.run(main())
   Eg: @property(getter,setter for `_radius`-> protected variable)
 
 ```
+class User:
+    def __init__(self, name, age):
+        self._name = name
+        self._age = age
+
+    @property
+    def name(self):
+        return self._name
+
+    <!-- if required to set custom setter -->
+    @name.setter
+    def name(self, value):
+        if(value>5):
+          self._name = value
+
+    @property
+    def age(self):
+        return self._age
+
+    @age.setter
+    def age(self, value):
+        self._age = value
+
+```
+
+```
 def my_decorator(func):
   def wrapper(*args,**kwargs):
     # Code to execute before the function
