@@ -3,6 +3,19 @@
 - strings in Python are immutable
 - label.replace() method returns a new string, but doesn't modify the original string in place
 
+- yield from -> like yield used in generator functions but tells the generator function to iterate over that thing(string,list,tuple) such that each part iterated, yield that part as coming from this generator function
+  -> The yield from keyword is used to delegate part of the generator’s operations to another generator or iterable. This is helpful when you have nested generators or want to include another iterable in a generator.
+
+```
+def nested_generator():
+    yield from [1, 2, 3]  # Delegates to a list
+    yield from range(4, 6)  # Delegates to a range object
+
+for value in nested_generator():
+    print(value)
+// Output: 1 2 3 4 5
+```
+
 - Async Context Manager in Python -> To manage resources asynchronously
   such as connecting to databases,opening files, or acquiring locks
 
@@ -17,7 +30,9 @@ with open("file.txt) as f:
     // code
 
 async with lifespan(app):
+    # block-of-code
     await do_stuff()
+    # after finishing do_stuff(), the code after yield in lifespan() will be executed
 
 When you create a context manager or an async context manager like above, what it does is that, before entering the with block, it will execute the code before the yield, and after exiting the with block, it will execute the code after the yield.
 ```
@@ -32,7 +47,7 @@ from contextlib import asynccontextmanager
 async def async_resource_manager():
     # Asynchronous setup code
     print("Acquiring resource")
-    await asyncio.sleep(1)  # Simulate an async operation, e.g., connecting to a database
+    await asyncio.sleep(1)  # Simulate an async operation, e.g., connecting to a database or loading a ML model
     resource = "my_resource"  # Replace with actual resource
     try:
         # The yield statement allows the function to temporarily return the
@@ -344,7 +359,7 @@ shutil.remove('file_to_delete.txt')
 
 1. Generators and Iterators
 
-- generators: type of iterable -> uses the yield keyword
+- generators: type of iterable(like list and tuples) -> uses the yield keyword
 
 Also, All generator functions are iterators because they produce values one at a time and maintain their state.
 
@@ -365,7 +380,7 @@ Output: 10,9,8,7,6
 ```
 
 - iterators: `__iter__()` and `__next__()`
-  Also,All generator functions are iterators because they produce values one at a time and maintain their state.
+  Also,All generator functions are iterators (like list and tuples) because they produce values one at a time and maintain their state.
 
 ```
 class Countdown:
