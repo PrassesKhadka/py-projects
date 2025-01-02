@@ -166,7 +166,8 @@ print("Hello, World!")
 *args -> Variable-Length Positional Arguments like spread operator in js {...args} -> gives the function arguments as array. Similarly *args in tuple
 
 \**kwargs -> Variable-Length Keyword Arguments -> Similar to *args but gives out dictionary -> Eg: (name="Alice")->{name:"Alice}
-
+kwargs.get("name")-> gets key
+kwargs.pop("name") -> gets value for the corresponding key
 ```
 
 - Public,Private,Protected variable in Python
