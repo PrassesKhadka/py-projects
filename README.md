@@ -1,4 +1,4 @@
-## Lessons Learnt
+## Knowledge Vault(Python)
 
 - Spread operator in Python
 
@@ -37,6 +37,32 @@ update(
     conversation_in=update_data
 )
 
+```
+
+- iterable vs iterator -> supports `__iter__()` method, Lists,strings and dictionaries -> can convert to iterator using `iter(iterable)` vs represents a stream of data, calls next item when `next()` or implements `__next()__` method
+
+- `map`,`filter`,`next` -> array-comprehension
+
+```
+next(iterator,default)
+
+iterator -> stream of data(generators), not iterables though
+default -> default value if iterator exhausted
+
+Eg:
+# Creating an iterator from a list
+my_list = [1, 2, 3, 4]
+iterator = iter(my_list)
+
+# Using next() to get the next item
+print(next(iterator,"End"))  # Output: 1
+print(next(iterator,"End"))  # Output: 2
+print(next(iterator,"End"))  # Output: 3
+print(next(iterator,"End"))  # Output: 4
+print(next(iterator,"End"))  # Output: "End"
+
+Eg: label = next((key for key, value in class_labels.items() if value == class_name), ""),
+the parameter: (key for key, value in class_labels.items() if value == class_name) -> generator expression(iterator), yields value one by one
 ```
 
 - `**args` and `**kwargs`
